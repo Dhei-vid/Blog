@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import "antd/dist/reset.css";
 
 import Home from "./components/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
@@ -18,9 +19,9 @@ function App() {
         <Route path="travel" element={<Travel />} />
         <Route path="sport" element={<Sport />} />
         <Route path="food" element={<Food />} />
-        <Route path="login" element={<LogIn />} />
-        <Route path="signup" element={<SignUp />} />
       </Route>
+      <Route path="login" element={<LogIn />} />
+      <Route path="signup" element={<SignUp />} />
     </Routes>
   );
 }
