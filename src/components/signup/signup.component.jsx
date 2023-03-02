@@ -1,9 +1,9 @@
-import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useFormik } from "formik";
 
 import Button from "../button/button.component";
 
-const SignUpSchema = Yup.object().shape({
+export const SignUpSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
@@ -13,14 +13,11 @@ const SignUpSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email!").required("Email is Required"),
-  password: Yup.string()
-    .min(8, "Password is too short - should be 8 chars minimum.")
-    .matches(/[a-zA-Z]/, "Password can only contain Latin letters.")
-    .required("Password is Required"),
-  confirmpassword: Yup.string().when("password", {
-    is: (val) => (val && val.length ? true : false),
-    then: Yup.string().oneOf([Yup.ref("password")], "Password does not match"),
-  }),
+  password: Yup.string().required("Password is Required"),
+  confirmpassword: Yup.string()
+    .label("confirm password")
+    .required("Confirm password")
+    .oneOf([Yup.ref("password"), null], "Password must match!"),
 });
 
 const SignUp = () => {
@@ -33,10 +30,10 @@ const SignUp = () => {
       confirmpassword: "",
     },
     validateOnBlur: true,
-    validationSchema: { SignUpSchema },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
+    validationSchema: SignUpSchema,
   });
 
   console.log("Errors: ", formik.errors);
